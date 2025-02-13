@@ -36,6 +36,10 @@ class ClienteSchema(BaseModel):
 class MascotaSchema(BaseModel):
     petID: int
     name: str
+    
+class ClienteMascotaSchema(BaseModel):
+    clientID: int
+    petID: int
 
 class ProductoSchema(BaseModel):
     productID: int
@@ -123,6 +127,26 @@ def obtener_mascotas():
         )
     
     return mascotas_dict
+
+@app.get("/clienteMascotas", response_model=List[ClienteMascotaSchema])
+def obtener_clienteMascotas():
+    clienteMascotas = db_catpet.get_clienteMascotas()
+    
+    # Verificar si clienteMascotas es None o está vacío y devolver una lista vacía si es necesario
+    if not clienteMascotas:
+        return []
+    
+    clienteMascotas_dict = []
+    
+    for cm in clienteMascotas:  # Verifica que la tupla tenga al menos 2 elementos
+        clienteMascotas_dict.append(
+            ClienteMascotaSchema(
+                clientID=cm[0],  # ID del cliente
+                petID=cm[1]      # ID de la mascota
+            )
+        )
+    
+    return clienteMascotas_dict
 
 @app.get("/productos", response_model=List[ProductoSchema])
 def obtener_productos():
@@ -248,3 +272,47 @@ def obtener_pedido_detalles():
         PedidoDetalleSchema(pedidoID=detalle[0], referencia=detalle[1], cantidad=detalle[2])
         for detalle in detalles
     ]
+
+@app.post("/insert/clientes/")
+async def create_cliente(data: dict):
+    return db_catpet.insert_cliente(data)
+
+@app.post("/insert/mascotas/")
+async def create_mascota(data: dict):
+    return db_catpet.insert_mascota(data)
+
+@app.post("/insert/clienteMascotas/")
+async def create_clienteMascota(data: dict):
+    return db_catpet.insert_cliente(data)
+
+@app.post("/insert/productos/")
+async def create_producto(data: dict):
+    return db_catpet.insert_producto(data)
+
+@app.post("/insert/veterinarias/")
+async def create_veterinaria(data: dict):
+    return db_catpet.insert_veterinaria(data)
+
+@app.post("/insert/veterinarios/")
+async def create_veterinario(data: dict):
+    return db_catpet.insert_veterinario(data)
+
+@app.post("/insert/historiales/")
+async def create_historial(data: dict):
+    return db_catpet.insert_historial(data)
+
+@app.post("/insert/foro/")
+async def create_foro(data: dict):
+    return db_catpet.insert_foro(data)
+
+@app.post("/insert/comentario/")
+async def create_comentario(data: dict):
+    return db_catpet.insert_comentario(data)
+
+@app.post("/insert/pedidos/")
+async def create_pedido(data: dict):
+    return db_catpet.insert_pedido(data)
+
+@app.post("/insert/pedido_detalles/")
+async def create_pedido_detalle(data: dict):
+    return db_catpet.insert_pedido_detalle(data)    
