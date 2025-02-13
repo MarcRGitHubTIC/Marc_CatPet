@@ -1,0 +1,60 @@
+CAT-PET
+
+Descripción/información sobre las tablas
+
+- Cliente:
+clientID (PK) -> ID de cliente 
+fullName -> Nombre completo del Cliente  
+correo -> Correo del cliente
+telefono -> Telefono del cliente int de 9
+mascota (FK) -> Mascota o mascotas que tendré el cliente, es un array de nombres
+premium -> Boleano el cual indica si es premium o no el cliente en la App.
+user (FK)-> Nombre de usuario para el foro
+pwd -> Contraseña de la cuenta
+pedido (FK) -> El cliente tiene que ser capaz de hacer pedidos 
+
+- Mascota:
+petID -> ID del animal
+name -> Nombre de la mascota
+dueño (FK) && (UNIQUE) -> ID del dueño, hace referencia a clientID
+numHistory (FK) -> Numero de historial de la mascota
+
+- Productos:
+referencia (PK) -> Codigo o ID de referencia del producto
+nombre -> Nombre del producto
+descripción -> Descripción del producto
+precio -> Precio del producto
+
+- Veterinaria:
+clinicaID (PK) -> ID para referenciar la clinica
+calle -> Calle fisica de la clinica
+nombre -> Nombre de la clinica
+telefono -> Teléfono de la clinica
+correo -> Correo de la clinica
+veterinarios (FK) -> Veterinarios que trabajan en la clinica
+
+- Veterinario:
+vetID (PK) -> ID del veterinario
+nombre -> Nombre del veterinario
+licencia -> El lisensiado el numerito que te dan
+clinica (FK) -> Clinica en la que trabaja
+
+- Historial:
+historyID (PK) -> Id del historial
+fechaRegis -> Fecha de registro 
+motivo -> Motivo de visita 
+descripcion -> Descripcion hecha por el veterinario de la consulta y todos los datos que desee remarcar 
+mascota (FK) -> Id de la mascota sobre la cual se ha hecho la consulta
+
+- Foro: 
+hilo (PK) -> Id de la nueva entrada que se hace al foro
+tema -> Titulo del hilo
+pregunta -> Cuerpo del hilo que se sube al foro
+comentario -> Comentarios del hilo al respecto
+usuario (FK) -> Usuario del foro
+
+- Pedido: (a consecuencia de cada pedido que haga el cliente, se crea esta tabla)
+pedidoID (PK) ->
+referencia(FK) -> a producto
+cantidad -> cantidad de cada producto
+cliente (FK) -> quien ha hecho el pedido
