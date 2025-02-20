@@ -87,6 +87,7 @@ class PedidoDetalleSchema(BaseModel):
     referencia: int
     cantidad: int
 
+# Metodos GET de la API
 @app.get("/")
 def root():
     return {"message": "API CatPet"}
@@ -273,6 +274,7 @@ def obtener_pedido_detalles():
         for detalle in detalles
     ]
 
+# Metodos POST de la API
 @app.post("/insert/clientes/")
 async def create_cliente(data: dict):
     return db_catpet.insert_cliente(data)
@@ -316,3 +318,93 @@ async def create_pedido(data: dict):
 @app.post("/insert/pedido_detalles/")
 async def create_pedido_detalle(data: dict):
     return db_catpet.insert_pedido_detalle(data)    
+
+# Metodos UPDATE de la API
+@app.put("/update/clientes/")
+async def update_cliente(data: dict):
+    return db_catpet.update_cliente(data)
+
+@app.put("/update/mascotas/")
+async def update_mascota(data: dict):
+    return db_catpet.update_mascota(data)
+
+@app.put("/update/clienteMascotas/")
+async def update_clienteMascota(data: dict):
+    return db_catpet.update_clienteMascota(data)
+
+@app.put("/update/productos/")
+async def update_producto(data: dict):
+    return db_catpet.update_producto(data)
+
+@app.put("/update/veterinarias/")
+async def update_veterinaria(data: dict):
+    return db_catpet.update_veterinaria(data)
+
+@app.put("/update/veterinarios/")
+async def update_veterinario(data: dict):
+    return db_catpet.update_veterinario(data)
+
+@app.put("/update/historiales/")
+async def update_historial(data: dict):
+    return db_catpet.update_historial(data)
+
+@app.put("/update/foro/")
+async def update_foro(data: dict):
+    return db_catpet.update_foro(data)
+
+@app.put("/update/comentario/")
+async def update_comentario(data: dict):
+    return db_catpet.update_comentario(data)
+
+@app.put("/update/pedidos/")
+async def update_pedido(data: dict):
+    return db_catpet.update_pedido(data)
+
+@app.put("/update/pedido_detalles/")
+async def update_pedido_detalle(data: dict):
+    return db_catpet.update_pedido_detalle(data)
+
+# Metodos DELETE de la API
+@app.delete("/delete/clientes/")
+async def delete_cliente(data: dict):
+    return db_catpet.delete_cliente(data)
+
+@app.delete("/delete/mascotas/")
+async def delete_mascota(data: dict):
+    return db_catpet.delete_mascota(data)
+
+@app.delete("/delete/clienteMascotas/")
+async def delete_clienteMascota(data: dict):
+    return db_catpet.delete_clienteMascota(data)
+
+@app.delete("/delete/productos/")
+async def delete_producto(data: dict):
+    return db_catpet.delete_producto(data)
+
+@app.delete("/delete/veterinarias/")
+async def delete_veterinaria(data: dict):
+    return db_catpet.delete_veterinaria(data)
+
+@app.delete("/delete/veterinarios/")
+async def delete_veterinario(data: dict):
+    return db_catpet.delete_veterinario(data)
+
+@app.delete("/delete/historiales/")
+async def delete_historial(data: dict):
+    return db_catpet.delete_historial(data)
+
+@app.delete("/delete/foro/")
+async def delete_foro(data: dict):
+    return db_catpet.delete_foro(data)
+
+@app.delete("/delete/comentario/")
+async def delete_comentario(data: dict):
+    return db_catpet.delete_comentario(data)
+
+@app.delete("/delete/pedidos/")
+async def delete_pedido(data: dict):
+    return db_catpet.delete_pedido(data)
+
+@app.delete("/delete/pedido_detalles/")
+async def delete_pedido_detalle(data: dict):
+    return db_catpet.delete_pedido_detalle(data)
