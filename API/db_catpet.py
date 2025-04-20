@@ -294,7 +294,6 @@ def insert_veterinaria(data):
         if conn and hasattr(conn, "close"):
             conn.close()
 
-
 def insert_veterinario(data):
     conn = db_client()
     if isinstance(conn, dict):
@@ -313,7 +312,6 @@ def insert_veterinario(data):
     finally:
         if conn and hasattr(conn, "close"):
             conn.close()
-
 
 def insert_historial(data):
     conn = db_client()
@@ -461,8 +459,7 @@ def update_cliente(data):
     finally:
         if conn and hasattr(conn, "close"):
             conn.close()
-
-        
+      
 def update_mascota(data):
     conn = db_client()
     if isinstance(conn, dict):
@@ -1076,4 +1073,42 @@ def delete_pedido_detalle(detalleID):
     finally:
         if conn and hasattr(conn, "close"):
             conn.close()
+
+# Endpoint especificos
+
+# Login para usuario
+def get_login(user):
+    conn = db_client()
+    if isinstance(conn, dict):
+        return conn  
+
+    try:
+        cur = conn.cursor()  
+        sql = "SELECT * FROM Cliente WHERE user = %s"
+        cur.execute(sql, (user,))
+        cliente = cur.fetchone()
+        return cliente
+
+    except Exception as e:
+        return {"status": -1, "message": f"Error en la consulta: {e}"}  
+
+    finally:
+        if conn and hasattr(conn, "close"):  
+            conn.close()
             
+def register_user(data):
+    conn = db_client
+    if isinstance(conn, dict):
+        return conn
+    try: 
+        cur = conn.cursor()
+        sql = "INSERT INTO Cliente (fullName, correo, telefono, premium, user, pwd) VALUES (%s, %s, %s, %s, %s, %s)"
+        cur.execute(sql, (data["fullName"], data["correo"], data["telefono"], data["premium"], data["user"], data["pwd"]))
+        conn.commit()
+        
+    except Exception as e:
+        return {"status": -1, "message": f"Error en la consulta: {e}"}  
+
+    finally:
+        if conn and hasattr(conn, "close"):  
+            conn.close()

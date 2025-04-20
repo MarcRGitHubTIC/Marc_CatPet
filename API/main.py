@@ -408,3 +408,28 @@ async def delete_pedido(data: dict):
 @app.delete("/delete/pedido_detalles/")
 async def delete_pedido_detalle(data: dict):
     return db_catpet.delete_pedido_detalle(data)
+
+    
+# Metodos especificos
+
+# Para obtener login con el usuario
+@app.get("/clientes/{clientID}", response_model=ClienteSchema)
+async def obtener_cliente(clientID: int):
+    cliente = db_catpet.get_cliente(clientID)
+    if cliente is None:
+        raise HTTPException(status_code=404, detail="Cliente no encontrado")
+    return db_catpet.get_login(
+        clientID=cliente[0],
+        fullName=cliente[1],
+        correo=cliente[2],
+        telefono=cliente[3] if cliente[3] is not None else "",  # Manejar valores NULL
+        premium=bool(cliente[4]),  # Convertir de int a bool
+        user=cliente[5],
+        pwd=cliente[6]
+    )
+    
+@app.post("/registro")
+async def registrar_usuario(data: dict):
+    # Por defecto todos los nuevos clientes no son premium
+    data["premium"] = False
+    return db_catpet.insert_cliente(data)

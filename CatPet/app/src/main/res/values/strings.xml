@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">CatPet</string>
+    <string name="cargaTexto">Cargando...</string>
+    <string name="username">Username</string>
+    <string name="password">Contraseña</string>
+    <string name="forgot_password"> Has olvidado la contraseña? </string>
+    <string name="register">Registrarse</string>
+    <string name="login">Iniciar sesion</string>
+    <string name="txPassword">Por favor, ingresa tu correo electrónico dos veces para proceder con la recuperación.</string>
+    <string name="txTituloPassword">Recuperación de contraseña</string>
+    <string name="home">Home</string>
+    <string name="servicios">Servicios</string>
+    <string name="contactos">Contactos</string>
+    <string name="tienda">Tienda</string>
+    <string name="cargando">Cargando...</string>
+</resources>

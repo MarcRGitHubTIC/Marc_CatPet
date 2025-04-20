@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="logoImage" type="id" />
+    <item name="imageLogo" type="id"></item>
+    <item name="etNombre" type="id"></item>
+    <item name="etCorreo" type="id"></item>
+    <item name="etUsuario" type="id"></item>
+    <item name="etPassword" type="id"></item>
+    <item name="btnRegistrar" type="id"></item>
+</resources>
