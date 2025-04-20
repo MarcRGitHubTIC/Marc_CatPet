@@ -1112,3 +1112,43 @@ def register_user(data):
     finally:
         if conn and hasattr(conn, "close"):  
             conn.close()
+            
+# Metodo login por correo
+def login_cliente_por_correo(correo, pwd):
+    conn = db_client()
+    if isinstance(conn, dict):
+        return conn
+
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM Cliente WHERE correo = %s", (correo,))
+        cliente = cur.fetchone()
+
+        if cliente is None:
+            return {"status": -1, "message": "Correo no encontrado"}
+
+        if cliente[6] != pwd:
+            return {"status": -1, "message": "Contraseña incorrecta"}
+
+        return {
+            "status": 1,
+            "message": "Login exitoso",
+            "data": {
+                "clientID": cliente[0],
+                "fullName": cliente[1],
+                "correo": cliente[2],
+                "telefono": cliente[3],
+                "premium": cliente[4],
+                "user": cliente[5]
+            }
+        }
+
+    except Exception as e:
+        return {"status": -1, "message": f"Error en la consulta: {e}"}
+
+    finally:
+        if conn and hasattr(conn, "close"):
+            conn.close()
+
+
+

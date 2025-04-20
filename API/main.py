@@ -10,13 +10,13 @@ from fastapi.middleware.cors import CORSMiddleware
 
 import db_catpet
 from client import db_client
-import catpet 
+import catpet
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -86,6 +86,11 @@ class PedidoDetalleSchema(BaseModel):
     pedidoID: int
     referencia: int
     cantidad: int
+    
+# Clases especializadas
+class LoginSchema(BaseModel):
+    correo: str
+    pwd: str
 
 # Metodos GET de la API
 @app.get("/")
@@ -432,4 +437,17 @@ async def obtener_cliente(clientID: int):
 async def registrar_usuario(data: dict):
     # Por defecto todos los nuevos clientes no son premium
     data["premium"] = False
+    return db_catpet.insert_cliente(data)
+
+@app.post("/login")
+async def login_usuario(data: LoginSchema):
+    return db_catpet.login_cliente_por_correo(data.correo, data.pwd)
+
+# Metodo para registrarse
+
+@app.post("/registro")
+async def registrar_usuario(data: dict):
+    # Por defecto todos los nuevos clientes no son premium
+    data["premium"] = False
+    # Insertamos los datos en la base de datos
     return db_catpet.insert_cliente(data)

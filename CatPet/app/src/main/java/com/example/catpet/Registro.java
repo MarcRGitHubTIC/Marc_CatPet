@@ -1,15 +1,14 @@
 package com.example.catpet;
 
-import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,7 +16,7 @@ import retrofit2.Response;
 
 public class Registro extends AppCompatActivity {
 
-    private EditText etNombre, etCorreo, etUsuario, etPassword, etTelefono;
+    private EditText etNombre, etCorreo, etUsuario, etPassword, etConfirmPassword, etTelefono;
     private Button btnRegistrar;
 
     @Override
@@ -26,10 +25,11 @@ public class Registro extends AppCompatActivity {
         setContentView(R.layout.activity_registro);
 
         // Referencias a los campos de entrada
-        etNombre = findViewById(R.id.etNombre);
+        etNombre = findViewById(R.id.etFullName);
         etCorreo = findViewById(R.id.etCorreo);
         etUsuario = findViewById(R.id.etUsuario);
         etPassword = findViewById(R.id.etPassword);
+        etConfirmPassword = findViewById(R.id.etConfirmPassword);
         etTelefono = findViewById(R.id.etTelefono);
         btnRegistrar = findViewById(R.id.btnRegistrar);
 
@@ -46,16 +46,25 @@ public class Registro extends AppCompatActivity {
         String correo = etCorreo.getText().toString().trim();
         String usuario = etUsuario.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
-
+        String confirmPassword = etConfirmPassword.getText().toString().trim();  // Obtener confirmación de contraseña
         String telefono = etTelefono.getText().toString().trim();
 
-        if (TextUtils.isEmpty(nombre) || TextUtils.isEmpty(correo) || TextUtils.isEmpty(usuario) || TextUtils.isEmpty(password) || TextUtils.isEmpty(telefono)) {
+        if (TextUtils.isEmpty(nombre) || TextUtils.isEmpty(correo) || TextUtils.isEmpty(usuario) ||
+                TextUtils.isEmpty(password) || TextUtils.isEmpty(confirmPassword) || TextUtils.isEmpty(telefono)) {
             Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        // Validar que las contraseñas coincidan
+        if (!password.equals(confirmPassword)) {
+            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Crear el objeto Cliente con los datos
         Cliente cliente = new Cliente(nombre, correo, telefono, usuario, password);
 
+        // Llamar a la API para registrar el cliente
         APIService apiService = RetrofitClient.getClient().create(APIService.class);
         Call<Void> call = apiService.registerCliente(cliente);
 
