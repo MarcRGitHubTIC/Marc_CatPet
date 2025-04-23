@@ -46,7 +46,7 @@ public class Registro extends AppCompatActivity {
         String correo = etCorreo.getText().toString().trim();
         String usuario = etUsuario.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
-        String confirmPassword = etConfirmPassword.getText().toString().trim();  // Obtener confirmación de contraseña
+        String confirmPassword = etConfirmPassword.getText().toString().trim();
         String telefono = etTelefono.getText().toString().trim();
 
         if (TextUtils.isEmpty(nombre) || TextUtils.isEmpty(correo) || TextUtils.isEmpty(usuario) ||
@@ -55,16 +55,13 @@ public class Registro extends AppCompatActivity {
             return;
         }
 
-        // Validar que las contraseñas coincidan
         if (!password.equals(confirmPassword)) {
             Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Crear el objeto Cliente con los datos
         Cliente cliente = new Cliente(nombre, correo, telefono, usuario, password);
 
-        // Llamar a la API para registrar el cliente
         APIService apiService = RetrofitClient.getClient().create(APIService.class);
         Call<Void> call = apiService.registerCliente(cliente);
 

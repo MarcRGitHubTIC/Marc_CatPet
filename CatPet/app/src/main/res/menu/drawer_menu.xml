@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_perfil" android:title="Perfil" android:icon="@drawable/ic_profile"/>
+    <item android:id="@+id/nav_mascota" android:title="Mascota" android:icon="@drawable/ic_pet"/>
+    <item android:id="@+id/nav_ayuda" android:title="Ayuda" android:icon="@drawable/ic_help"/>
+    <item android:id="@+id/nav_logout" android:title="Cerrar sesión" android:icon="@drawable/ic_logout"/>
+    <item android:id="@+id/nav_salir" android:title="Salir" android:icon="@drawable/ic_exit"/>
+</menu>
