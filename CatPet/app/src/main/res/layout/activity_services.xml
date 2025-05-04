@@ -7,13 +7,11 @@
     android:layout_height="match_parent"
     tools:context=".Services">
 
- <!-- Bottom Navigation -->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_services"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        app:menu="@menu/bottom_nav_menu"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:layout_height="match_parent"
+        android:padding="8dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

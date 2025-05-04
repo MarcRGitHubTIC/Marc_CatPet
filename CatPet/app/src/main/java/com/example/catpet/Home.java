@@ -5,7 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Home extends BaseActivity {
 
@@ -13,6 +19,18 @@ public class Home extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        RecyclerView recyclerView = findViewById(R.id.recycler_home);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        List<HomeItem> items = new ArrayList<>();
+        items.add(new HomeItem("Veterinaria", "Consulta tu historial médico y vacunas", R.drawable.logo));
+        items.add(new HomeItem("Adopciones", "Conoce animales que buscan un hogar", R.drawable.logo));
+        items.add(new HomeItem("Blog", "Lee consejos de expertos sobre mascotas", R.drawable.logo));
+
+        HomeAdapter adapter = new HomeAdapter(items);
+        recyclerView.setAdapter(adapter);
+
 
         Log.d("DEBUG", "Actividad Home creada");
 

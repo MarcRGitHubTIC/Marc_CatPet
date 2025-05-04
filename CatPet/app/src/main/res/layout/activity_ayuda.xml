@@ -7,4 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".Ayuda">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_ayuda"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="12dp"
+        tools:ignore="MissingConstraints" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

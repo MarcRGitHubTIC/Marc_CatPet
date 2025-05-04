@@ -1,62 +1,70 @@
 package com.example.catpet;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
-import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class Store extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Store extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_store);
+
+        RecyclerView recyclerView = findViewById(R.id.recycler_store);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        List<StoreItem> productos = new ArrayList<>();
+        productos.add(new StoreItem("Pienso gato", 5.99, R.drawable.logo));
+        productos.add(new StoreItem("Juguete", 3.49, R.drawable.logo));
+
+        StoreAdapter adapter = new StoreAdapter(productos);
+        recyclerView.setAdapter(adapter);
+
+
         Log.d("DEBUG", "Actividad Store creada");
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
+        bottomNav.setSelectedItemId(R.id.nav_store);
+        bottomNav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            Intent intent = null;
 
-        bottomNavigationView.setSelectedItemId(R.id.nav_store);
-
-        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Log.d("DEBUG", "Elemento del menú seleccionado: " + item.getTitle());
-
-                Intent intent = null;
-                int itemId = item.getItemId();
-
-                if (itemId == R.id.nav_store) {
-                    Log.d("DEBUG", "Se seleccionó Tienda");
-                    return true;
-                }
-
-                if (itemId == R.id.nav_home) {
-                    Log.d("DEBUG", "Se seleccionó Home");
-                    intent = new Intent(Store.this, Home.class);
-                } else if (itemId == R.id.nav_services) {
-                    Log.d("DEBUG", "Se seleccionó Servicios");
-                    intent = new Intent(Store.this, Services.class);
-                } else if (itemId == R.id.nav_contacts) {
-                    Log.d("DEBUG", "Se seleccionó Contactos");
-                    intent = new Intent(Store.this, Contactos.class);
-                }
-
-                if (intent != null) {
-                    Log.d("DEBUG", "Iniciando nueva actividad: " + intent.getComponent());
-                    startActivity(intent);
-                    overridePendingTransition(0, 0);
-                    finish();
-                } else {
-                    Log.e("ERROR", "Intent es NULL, no se pudo iniciar la actividad");
-                }
-
+            if (id == R.id.nav_store) {
+                Log.d("DEBUG", "Se seleccionó Tienda");
                 return true;
+
+            } else if (id == R.id.nav_home) {
+                Log.d("DEBUG", "Se seleccionó Home");
+                intent = new Intent(this, Home.class);
+
+            } else if (id == R.id.nav_services) {
+                Log.d("DEBUG", "Se seleccionó Servicios");
+                intent = new Intent(this, Services.class);
+
+            } else if (id == R.id.nav_contacts) {
+                Log.d("DEBUG", "Se seleccionó Contactos");
+                intent = new Intent(this, Contactos.class);
             }
+
+            if (intent != null) {
+                startActivity(intent);
+                overridePendingTransition(0, 0);
+                finish();
+            } else {
+                Log.e("ERROR", "Intent es NULL, no se pudo iniciar la actividad");
+            }
+
+            return true;
         });
     }
 }
