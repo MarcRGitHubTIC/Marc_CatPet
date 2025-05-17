@@ -13,6 +13,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class Store extends BaseActivity {
 
     @Override
@@ -23,12 +27,31 @@ public class Store extends BaseActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler_store);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        List<StoreItem> productos = new ArrayList<>();
-        productos.add(new StoreItem("Pienso gato", 5.99, R.drawable.logo));
-        productos.add(new StoreItem("Juguete", 3.49, R.drawable.logo));
+        APIService apiService = RetrofitClient.getClient().create(APIService.class);
+        apiService.obtenerProductos().enqueue(new Callback<List<Producto>>() {
+            @Override
+            public void onResponse(Call<List<Producto>> call, Response<List<Producto>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Producto> productosApi = response.body();
+                    List<StoreItem> storeItems = new ArrayList<>();
 
-        StoreAdapter adapter = new StoreAdapter(productos);
-        recyclerView.setAdapter(adapter);
+                    for (Producto p : productosApi) {
+                        storeItems.add(new StoreItem(p.getNombre(), p.getPrecio(), R.drawable.logo));
+                    }
+
+                    StoreAdapter adapter = new StoreAdapter(storeItems);
+                    recyclerView.setAdapter(adapter);
+                } else {
+                    Log.e("API", "Respuesta no exitosa");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Producto>> call, Throwable t) {
+                Log.e("API", "Error al conectar con la API", t);
+            }
+        });
+
 
 
         Log.d("DEBUG", "Actividad Store creada");

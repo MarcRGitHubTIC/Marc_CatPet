@@ -3,6 +3,8 @@ package com.example.catpet;
 
 import com.google.gson.JsonObject;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -15,6 +17,10 @@ public interface APIService {
 
     @POST("registro")
     Call<Void> registerCliente(@Body Cliente cliente);
+
+    @GET("productos")
+    Call<List<Producto>> obtenerProductos();
+
 
 }
 

@@ -31,7 +31,7 @@ public class Ayuda extends BaseActivity {
         AyudaAdapter adapter = new AyudaAdapter(items);
         recyclerView.setAdapter(adapter);
 
-        @SuppressLint("MissingInflatedId") BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setOnItemSelectedListener(item -> {
             Intent intent = null;
             int id = item.getItemId();

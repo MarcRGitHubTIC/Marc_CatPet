@@ -13,10 +13,10 @@ import java.util.List;
 
 public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHolder> {
 
-    private List<StoreItem> items;
+    private List<StoreItem> productos;
 
-    public StoreAdapter(List<StoreItem> items) {
-        this.items = items;
+    public StoreAdapter(List<StoreItem> productos) {
+        this.productos = productos;
     }
 
     @NonNull
@@ -28,15 +28,15 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
 
     @Override
     public void onBindViewHolder(@NonNull StoreViewHolder holder, int position) {
-        StoreItem item = items.get(position);
-        holder.nombre.setText(item.getNombre());
-        holder.precio.setText(item.getPrecio() + "€");
-        holder.imagen.setImageResource(item.getImagenResId());
+        StoreItem producto = productos.get(position);
+        holder.nombre.setText(producto.getNombre());
+        holder.precio.setText(String.format("%.2f€", producto.getPrecio()));
+        holder.imagen.setImageResource(R.drawable.logo);
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return productos.size();
     }
 
     static class StoreViewHolder extends RecyclerView.ViewHolder {
@@ -51,3 +51,4 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
         }
     }
 }
+
